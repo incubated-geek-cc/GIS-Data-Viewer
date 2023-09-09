@@ -1,0 +1,113 @@
+html,body {
+	width:100vw;
+	height:100vh;
+	overflow:hidden;
+	padding: 0;
+  	margin: 0;
+}
+body {
+	font-size:1.0em;
+	padding-top:50px;
+}
+.unicode {
+  font-family: Cambria;
+}
+.emoji {
+  font-family: Segoe UI Emoji;
+}
+.symbol {
+  font-family: Segoe UI Symbol;
+} 
+.w-40 {
+	width:40%!important;
+}
+.h-60 {
+	height:60%!important;
+}
+#menu-bar {
+    position: absolute;
+    z-index: 999;
+    height: 50px;
+    top: 0;
+}
+#inputSpatialFormatBtn {
+	width:175px;
+}
+#mapPropsDatatableContainer {
+	overflow:auto;
+}
+
+#mapPropsDatatableContainer::-webkit-scrollbar {
+    width: 14px
+}
+
+#mapPropsDatatableContainer::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, .05);
+    border: 1px solid #cacaca;
+}
+
+#mapPropsDatatableContainer::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+    background-color: #343a40;
+}
+
+#resetMapViewBtn, 
+#clearAllBtn, 
+#outputSpatialFormatBtn {
+	width: 34px;
+    height: 34px;
+    font-kerning: none;
+    font-size: larger;
+    text-align: center;
+    -webkit-text-stroke: thin;
+    border-width: unset;
+}
+
+path.input-feature[fill='none']:hover {
+	stroke: rgba(97, 99, 102, 0.65);
+    stroke-width: 5.5;
+}
+path.input-feature[fill='#F8F9FA']:hover {
+    fill: rgb(97 99 102);
+}
+/*img.input-feature:hover {
+    -webkit-box-shadow: 0px 0px 25px 25px rgba(97, 99, 102, 0.65);
+	-moz-box-shadow:    0px 0px 25px 25px rgba(97, 99, 102, 0.65);
+	box-shadow:         0px 0px 25px 25px rgba(97, 99, 102, 0.65);
+}*/
+/*path.input-feature:hover {
+    filter: drop-shadow(25px 0 25px 0 rgba(97, 99, 102, 0.65));
+}
+.input-feature:hover {
+	cursor:pointer;
+}*/
+#menu-bar a {
+	color: #91c3d7;
+	-webkit-tap-highlight-color: rgba(109, 191, 222, 0.75);
+}
+#menu-bar a:hover {
+	color: rgba(109, 191, 222, 0.75);
+}
+.leaflet-control-attribution.leaflet-control {
+	right:5px;
+	bottom:5px;
+}
+.command.leaflet-control {
+    opacity:0.85;
+    font-size:11px;
+}
+.table-condensed td, .table-condensed th {
+    border: 1px solid #dee2e6;
+    padding: 0.15rem 0.25rem;
+}
+#map-bounds {
+    min-width:180px;
+}
+.leaflet-popup-content-wrapper {
+    padding: 1px;
+    text-align: left;
+    border-radius: 5px;
+}
