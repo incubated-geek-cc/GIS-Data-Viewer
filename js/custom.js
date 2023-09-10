@@ -1,10 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 	/*
-	GeoJSON Specs: https://datatracker.ietf.org/doc/ht
-	ml/rfc7946/
-
+	GeoJSON Specs: https://datatracker.ietf.org/doc/html/rfc7946/
 	ArcGIS: https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-GeoJSONLayer.html
-
 	https://gis.stackexchange.com/questions/38863/how-to-render-a-table-with-mixed-geometry-types-in-qgis
 	*/
 	if (!window.FileReader) {
@@ -43,6 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
 	    }
 	}
 
+	function htmlToElement(html) {
+	    let documentFragment = document.createDocumentFragment();
+	    let template = document.createElement('template');
+	    template.innerHTML = html.trim();
+	    for (let i = 0, e = template.content.childNodes.length; i < e; i++) {
+	        documentFragment.appendChild(template.content.childNodes[i].cloneNode(true));
+	    }
+	    return documentFragment;
+	}
+
 	const mapContainer=document.getElementById('map');
 
 	const resetMapViewBtn=document.getElementById('resetMapViewBtn');
@@ -76,15 +83,15 @@ document.addEventListener("DOMContentLoaded", () => {
 		inputSpatialFormatBtn.setAttribute('accept',fileExt);
 	});
 
-	let uploadSpatialFileIs=null;
-	let uploadedGeojsonObj=null;
-	let mapGeojsonObj=null;
-	let pointGeojsonObj=null;
+	let mapPropsDatatable;
+
+	let uploadSpatialFileIs, uploadedGeojsonObj;
+	let mapGeojsonObj, pointGeojsonObj;
+
 	let toDel = {};
 
-	let layerBounds=null;
-	let mapLayer=null;
-	let pointLayer=null;
+	let layerBounds;
+	let mapLayer, pointLayer;
 
 	const scale = L.control.scale({
       maxWidth: 100,
@@ -97,6 +104,15 @@ document.addEventListener("DOMContentLoaded", () => {
 		position: 'topleft' 
 	}).addTo(map);
 	
+	
+	// const mb = L.tileLayer('https://www.onemap.gov.sg/maps/tiles/Original_HD/{z}/{x}/{y}.png', {
+ //      detectRetina: true,
+ //      maxZoom: 19,
+ //      minZoom: 11,
+ //      attributions: false,
+ //      zoomControl: false
+ //    }).addTo(map);
+
 	L.control.attribution({
       prefix: '<span class="prefix-attribution pr-1 pl-1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAXZJREFUKFNjZMABZp5JYxVm+az2+z/DpkjD5cowZYzY1IMUi/P+7Pzz+3cMJze76LMHH2VTHdc9AanF0DDjYLCqjBzfLCYmJoffv34zsLAyM7x/+a0rxnxlOYaGpaejlLgF2FaxszMb//r5m+HL528MQiL8DN++/L4arLVIB0PDxlvx69g4WAJBEm9evWfg4eVi4OBkZ/j7l+Gqj+JcVA2zDgb5ySoIboQ58trFuwxa+nC/XvWUQ9Ow8XbCFTZ2Zm2Q6dcv3mXQ0FNiYGSEePHv739XfZTno9qw/VHyFQYGBu3PH78yPH/8mkFNRwEegF8+/DwYqrfEAcUPMA33bz1hEBEXZODl54ZrePHgc2Ci3aoNKBo230s88OvnL/t7Nx8zqOsoMrCysUCc8/f/Bx/FeYIYETf3cLg+A8P3+p+/fgUqqkpDFP/59/Pzh19ZkUZL52GN6YJ+AwETO/V6QWHuvF8//rz9/u13Jgv7n81h2qt/wTQAAJeGjg3D55B1AAAAAElFTkSuQmCC" /><a href="https://leafletjs.com/" title="A JavaScript library for interactive maps" target="_blank">Powered by Leaflet</a> | <span class="symbol">© Created by</span> <a href="https://medium.com/@geek-cc" target="_blank"> ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a></span>',
       position: 'bottomright'
@@ -145,31 +161,26 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	outputSpatialFormatBtn.addEventListener('click', async()=> {
-		let uploadedFeaturesArr=mapGeojsonObj['features'].concat(pointGeojsonObj['features']);
 		let updatedGeojsonObj={
 			'type':'FeatureCollection',
-			'features': uploadedFeaturesArr
+			'features': []
 		};
-		let geojsonObj = JSON.parse(JSON.stringify(updatedGeojsonObj));
-
-		let geojsonObjFeatures=geojsonObj['features'];
-		for(let g in geojsonObjFeatures) {
-			let geojsonObjFeature=geojsonObjFeatures[g];
+		let geojsonObjFeatures=mapGeojsonObj['features'].concat(pointGeojsonObj['features']);
+		for(let geojsonObjFeature of geojsonObjFeatures) {
 			let propertiesObj=geojsonObjFeature['properties'];
 			let geometryObj=geojsonObjFeature['geometry'];
-			
 			for(let k in toDel) {
 				let delProp=toDel[k];
 				if(delProp==true) {
 					delete propertiesObj[k];
 				}
 			}
-			let updatedFeatureObj={
-				'type':'Feature',
-				'geometry': geometryObj,
-				'properties': propertiesObj
+			let updatedGeojsonFeature={
+				'type': 'Feature',
+				'geometry': JSON.parse(JSON.stringify(geometryObj)),
+				'properties': JSON.parse(JSON.stringify(propertiesObj))
 			};
-			updatedGeojsonObj['features'].push(updatedFeatureObj);
+			updatedGeojsonObj['features'].push(updatedGeojsonFeature);
 		}
 
 		let updatedGeoData=JSON.stringify(updatedGeojsonObj);
@@ -182,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			outputFileExt='.kml';
 			updatedGeoData=tokml(updatedGeojsonObj);
 		}
-
+		
 		let textblob = new Blob([updatedGeoData], {
             type: "text/plain"
         });
@@ -237,19 +248,30 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
         (async()=> {
+        	mapPropsDatatable = document.createElement('table');
+        	mapPropsDatatable.id='mapPropsDatatable';
+        	mapPropsDatatable.setAttribute('class','table table-bordered table-condensed table-sm m-0');
+        	mapPropsDatatableContainer.appendChild(mapPropsDatatable);
+
         	const csvDataOutput = await converter.json2csvAsync(allPropObjs, json2csvOptions);
+        	let csvDataOutputHtmlStr = `<tr><td>${csvDataOutput}</td></tr>`;
+
+        	let trHtmlStrArr=csvDataOutputHtmlStr.split('<tr>');
+        	trHtmlStrArr.shift(); // empty string
+        	let theadRowHtmlStr=trHtmlStrArr.shift();
+        	theadRowHtmlStr=`<thead><tr>${theadRowHtmlStr}</thead>`;
+        	theadRowHtmlStr=theadRowHtmlStr.replaceAll('<td>','<th>');
+        	theadRowHtmlStr=theadRowHtmlStr.replaceAll('</td>','</th>');
+        	const theadRowHtmlEle=htmlToElement(theadRowHtmlStr);
+        	mapPropsDatatable.appendChild(theadRowHtmlEle);
+
+        	let tbodyRowHtmlStr=`<tbody><tr>${trHtmlStrArr.join('<tr>')}</tbody>`;
+        	const tbodyRowHtmlEle=htmlToElement(tbodyRowHtmlStr);
+        	mapPropsDatatable.appendChild(tbodyRowHtmlEle);
+
 	        try {
-	        	// let mapPropsDatatable=document.createElement('table');
-	        	// mapPropsDatatable.setAttribute('class','table table-bordered table-condensed table-sm m-0');
-	        	
-				let str="<table id='mapPropsDatatable' class='table table-bordered table-condensed table-sm m-0'><tr><td>"+csvDataOutput+"</td></tr></table>";
-				mapPropsDatatableContainer.innerHTML=str;
-
-				let mapPropsDatatable=document.getElementById('mapPropsDatatable');
-				let headerRow=mapPropsDatatable.rows[0];
-				headerRow['style']['font-weight']='bolder';
-
-				let headerCols=headerRow.querySelectorAll('td');
+	        	let headerRow=mapPropsDatatable.rows[0];
+				let headerCols=headerRow.querySelectorAll('th');
 				for(let headerCol of headerCols) {
 					let delBtn = document.createElement('button');
 					let colField = headerCol.innerText;
@@ -261,8 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
 					delBtn.style.width = '25px';
 					delBtn.style.display = 'block';
 					toDel[colField]=false;
-
 					headerCol.prepend(delBtn);
+
 					delBtn.addEventListener('click', async(e)=> {
 						let noDel=(e.target.innerText === noDelField);
 						delBtn.innerText = noDel ? delField : noDelField;
@@ -273,7 +295,6 @@ document.addEventListener("DOMContentLoaded", () => {
 							delBtn.classList.add('btn-outline-danger');
 							delBtn.classList.remove('btn-danger');
 						}
-						
 						let toDelVal = toDel[colField];
 						toDel[colField]=!toDelVal;
 					});
@@ -329,12 +350,10 @@ document.addEventListener("DOMContentLoaded", () => {
     			pointGeojsonObj['features'].push(geojsonInputFeature);
     	  	}
     	}
-		
-
 		let customIcon = L.Icon.extend({
 		    options: {
 		      iconSize:     [24, 24], // size of the icon
-		      iconAnchor:   [24, 12],   // point of the icon which will correspond to marker's location
+		      iconAnchor:   [24, 12], // point of the icon which will correspond to marker's location
 		      popupAnchor:  [-6, -12] // point from which the popup should open relative to the iconAnchor
 		    }
 		});
@@ -342,10 +361,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			iconUrl: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gU3ZnIFZlY3RvciBJY29ucyA6IGh0dHA6Ly93d3cub25saW5ld2ViZm9udHMuY29tL2ljb24gLS0+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjU2IDI1NiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8bWV0YWRhdGE+IFN2ZyBWZWN0b3IgSWNvbnMgOiBodHRwOi8vd3d3Lm9ubGluZXdlYmZvbnRzLmNvbS9pY29uIDwvbWV0YWRhdGE+DQo8Zz48Zz48Zz48cGF0aCBmaWxsPSJyZ2IoMjIwIDU5IDU5KSIgZD0iTTEyOCwxMGMtNDguOSwwLTg4LjUsMzkuNi04OC41LDg4LjVDMzkuNSwxNDcuNCwxMjgsMjQ2LDEyOCwyNDZzODguNS05OC42LDg4LjUtMTQ3LjVDMjE2LjUsNDkuNiwxNzYuOSwxMCwxMjgsMTB6IE0xMjgsMTU3LjVjLTMyLjYsMC01OS0yNi40LTU5LTU5YzAtMzIuNiwyNi40LTU5LDU5LTU5YzMyLjYsMCw1OSwyNi40LDU5LDU5QzE4NywxMzEuMSwxNjAuNiwxNTcuNSwxMjgsMTU3LjV6Ii8+PC9nPjwvZz48L2c+DQo8L3N2Zz4=',
 			className: 'input-feature rounded-circle'
 		});
-
 		// console.log(mapGeojsonObj);
 		// console.log(pointGeojsonObj);
-
 		mapLayer = L.geoJSON(mapGeojsonObj, {
 		    style: function (feature) {
 		        return {
@@ -358,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		        }
 		    }
 		})
-		.bindPopup((layer)=> jsonObjToHTMLTable(layer.feature.properties))
+		.bindPopup((layer)=>jsonObjToHTMLTable(layer.feature.properties))
 		.addTo(map);
 		
 		pointLayer = L.geoJSON(pointGeojsonObj, {
@@ -372,12 +389,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		map.fitBounds(mapLayer.getBounds());
 		resetMapView();
 	}
-
 	function resetMapView() {
 		let layerBounds=mapLayer.getBounds();
 		map.fitBounds(layerBounds);
 	}
-
 	inputSpatialFormatBtn.addEventListener('change', async(uploadFle) => {
 		let fileis = inputSpatialFormatBtn.files[0];
         let fileName = uploadFle.target.value;
@@ -397,7 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         fileredr.addEventListener('load', async(fle) => {
         	let filecont = fle.target.result; // array buffer
-           	uploadSpatialFileIs=filecont
+           	uploadSpatialFileIs=filecont;
             if(spatialType=='SHP') {
             	let geojsonObj = await shp(uploadSpatialFileIs);
 				renderGeojsonLayer(geojsonObj);
@@ -459,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		imgBounds_Bottom.innerHTML='';
 		imgBounds_Top.innerHTML='';
 
-		mapPropsDatatableContainer.innerHTML='';
+		mapPropsDatatableContainer.removeChild(mapPropsDatatable);
 		triggerEvent(inputSpatialFormatDDL,'change');
 	});
 });
