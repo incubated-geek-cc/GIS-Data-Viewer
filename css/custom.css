@@ -33,30 +33,52 @@ body {
 #inputSpatialFormatBtn {
 	width:175px;
 }
-#mapPropsDatatableContainer {
+.tabContainer {
 	overflow:auto;
 }
-
-#mapPropsDatatableContainer::-webkit-scrollbar {
+.tabContainer::-webkit-scrollbar {
     width: 14px
 }
-
-#mapPropsDatatableContainer::-webkit-scrollbar-track {
+.tabContainer::-webkit-scrollbar-track {
     border-radius: 8px;
     background-color: rgba(0, 0, 0, .05);
     border: 1px solid #cacaca;
 }
-
-#mapPropsDatatableContainer::-webkit-scrollbar-thumb {
+.tabContainer::-webkit-scrollbar-thumb {
     border-radius: 8px;
     border: 3px solid transparent;
     background-clip: content-box;
     background-color: #343a40;
 }
+#mapPropsDatatable th {
+    white-space: pre;
+}
+div.leaflet-popup-content div.table-responsive-sm {
+    max-height: 200px;
+    overflow: auto;
+}
+div.leaflet-popup-content div.table-responsive-sm::-webkit-scrollbar {
+    width: 14px
+}
+div.leaflet-popup-content div.table-responsive-sm::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .05);
+    border: 1px solid #cacaca;
+}
+div.leaflet-popup-content div.table-responsive-sm::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+    background-color: #cccccc;
+}
+div.leaflet-popup-content div.table-responsive-sm tr:nth-child(even) {
+    background: #f7f7f7;
+}
 
 #resetMapViewBtn, 
 #clearAllBtn, 
-#outputSpatialFormatBtn {
+#outputSpatialFormatBtn,
+#exportGeoCSVOutputBtn {
 	width: 34px;
     height: 34px;
     font-kerning: none;
@@ -66,12 +88,12 @@ body {
     border-width: unset;
 }
 
-path.input-feature[fill='none']:hover {
-	stroke: rgba(97, 99, 102, 0.65);
-    stroke-width: 5.5;
+path.input-feature[fill='none'] {
+    fill-opacity: 0.0;
+    stroke: #dc3b3b;
 }
-path.input-feature[fill='#F8F9FA']:hover {
-    fill: rgb(97 99 102);
+path.input-feature:not([fill='none']) {
+    fill-opacity: 0.45;
 }
 /*img.input-feature:hover {
     -webkit-box-shadow: 0px 0px 25px 25px rgba(97, 99, 102, 0.65);
@@ -97,17 +119,27 @@ path.input-feature[fill='#F8F9FA']:hover {
 }
 .command.leaflet-control {
     opacity:0.85;
-    font-size:11px;
+    font-size:12px;
 }
 .table-condensed td, .table-condensed th {
     border: 1px solid #dee2e6;
     padding: 0.15rem 0.25rem;
 }
 #map-bounds {
-    min-width:180px;
+    min-width:200px;
 }
 .leaflet-popup-content-wrapper {
     padding: 1px;
     text-align: left;
     border-radius: 5px;
+}
+.tab-content {
+    height: calc(100% - 40px);
+}
+
+td.table-placeholder {
+    vertical-align: middle;
+}
+.tabSymbol {
+    vertical-align: sub;
 }

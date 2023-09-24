@@ -3,7 +3,14 @@
 <head>
 	<meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <title>🔎 GeoAnalysis | Upload, Preview & Convert GIS Data</title>
+    <meta name="author" content="Charmaine Chui" />
+    <meta name='description' content="A geospatial utility application built with leafletjs, KML, GeoJSON, SHP.">
+    <meta name='keywords' content='JavaScript,Web,HTML'>
+    <meta name="subject" content="Geospatial Utility" />
+    <link rel="icon" href="img/favicon-16x16.ico" type="image/x-icon" sizes="16x16" />
+    <link rel="icon" href="img/favicon-32x32.ico" type="image/x-icon" sizes="32x32" />
+    <link rel="icon" href="img/favicon-48x48.ico" type="image/x-icon" sizes="48x48" />
+    <title>Geo Viewer | Upload, Preview & Convert GIS Data</title>
     <link rel='stylesheet' href='css/leaflet-1.3.1.css' />
     <script type='text/javascript' src='js/leaflet-1.3.1.js'></script>
     <script type='text/javascript' src='js/shp.min.js'></script>
@@ -21,7 +28,7 @@
 			<div class='bg-none float-left p-0 ml-1'>
 	 			<div class="input-group">
 			        <div class="input-group-prepend">
-			           <span class="input-group-text rounded-0"><strong class='symbol mr-1'>⭱</strong>Upload Data</span>
+			           <span class="input-group-text rounded-0"><strong class='symbol mr-1'>⭱</strong>Upload</span>
 			        </div>
 			        <select id='inputSpatialFormat' class='custom-select rounded-0'>
 			        	<option value='GEOJSON'>GEOJSON</option>
@@ -37,8 +44,9 @@
 				</div>
 			</div>
 			<div class="bg-none float-left rounded-0 p-1 btn-group btn-group-sm ml-1 mr-1">
-				<button id='resetMapViewBtn' type='button' class='btn btn-sm bg-primary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2'>⌖</button>
-			  	<button id='clearAllBtn' type='button' class='btn btn-sm bg-secondary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2'>⭮</button>
+				<button id='resetMapViewBtn' type='button' class='btn btn-sm bg-secondary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Re-positions map to its default bounds and zoom level</p>">⌖</button>
+
+			  	<button id='clearAllBtn' type='button' class='btn btn-sm bg-secondary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>To reset all filters to its default states and clear all rendered map layers</p>">⭮</button>
 			</div>
 			<div class='bg-none float-right p-0'>
 	 			<div class="input-group">
@@ -50,7 +58,7 @@
 						<option value="KML">KML</option>
 			        </select>
 			        <div class="input-group-append rounded-0">
-			           <span class="input-group-text p-0 bg-none border-0"><button id='outputSpatialFormatBtn' type='button' class='btn btn-sm bg-success text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 ml-2 mr-1' disabled>⭳</button></span>
+			           <span class="input-group-text p-0 bg-none border-0"><button id='outputSpatialFormatBtn' type='button' class='btn btn-sm bg-success text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 ml-2 mr-1' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Save output as spatial data file</p>" disabled>⭳</button></span>
 			        </div>
 		    	</div>
 	    	</div>
@@ -59,7 +67,34 @@
 			<div class='col-sm-7 no-gutters'>
 				<div id="map" class='border w-100 h-100'></div>
 			</div>
-			<div id='mapPropsDatatableContainer' class='col-sm-5 bg-light border table-responsive-sm h-100 no-gutters small'></div>
+
+			<!-- for better usage, wrap the tabs and contents ⇲⇱ -->
+			<div class="col-sm-5 bg-light border h-100 no-gutters small">
+				<!-- Nav tabs -->
+				<ul id="panelTabs" class="nav nav-tabs symbol" role="tablist">
+				  <li class="nav-item">
+				    <a class="nav-link symbol active" id="table-tab" href="#table" data-toggle="tab" data-height="true" aria-controls="table" aria-selected="true" role="tab"><span class='lead tabSymbol'>▦</span> Table</a>
+				  </li>
+				  
+				  <li class="nav-item">
+				    <a class="nav-link symbol" id="geojson-tab" href="#geojson" data-toggle="tab" data-height="true" aria-controls="geojson" aria-selected="false" role="tab"><span class='lead tabSymbol'>👁</span> GeoJSON</a>
+				  </li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+				  <div role="tabpanel" class="tab-pane fade h-100 active show" aria-labelledby="table-tab" id="table">
+				  	<div id='mapPropsDatatableContainer' class='tabContainer table-responsive-sm h-100'></div>
+				  </div>
+				  <!-- ⅰⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ ⅺ ⅻ -->
+				  <div role="tabpanel" class="tab-pane fade h-100" aria-labelledby="geojson-tab" id="geojson">
+				  	<div id='geojsonDisplayContainer' class='tabContainer table-responsive-sm h-100 m-1'></div>
+				  </div>
+				</div>
+
+			</div>
+
+			
 		</div>
 	</body>
 	<script type='text/javascript' src='js/polyfill.js'></script>
