@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="https://github.com/incubated-geek-cc/GIS-Data-Viewer/raw/main/public/img/logo.png" width="96" alt="logo">
+  <img src="https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/logo.png" width="96" alt="logo">
 
-  # 🏙️ GIS Data Viewer
+  # 🌀 GIS Data Viewer
 
   ### 🛠️ Developed in client-side JavaScript. No server-side processing required.
 
@@ -10,9 +10,9 @@
 <div align="left">
 
 ### 👀 Preview
-<img src='https://github.com/incubated-geek-cc/GIS-Data-Viewer/raw/main/public/img/demo.gif' width="600px" />
+<img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/demo.gif' width="600px" />
 <br>
-<img src='https://github.com/incubated-geek-cc/GIS-Data-Viewer/raw/main/public/img/mergePolygons.gif' width="600px" />
+<img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/mergePolygons.gif' width="600px" />
 
 ### 🌟 Try it yourself
 [**Live Demo :: Link**](https://incubated-geek-cc.github.io/GIS-Data-Viewer/)
