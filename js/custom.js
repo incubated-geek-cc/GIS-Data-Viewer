@@ -65,33 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	    let elementContainer=document.getElementById(elementId);
 	    elementContainer.innerHTML='';
 	    elementContainer.appendChild(document.createElement("pre")).innerHTML=syntaxHighlight(JSON.stringify(jsonObj, undefined, 2));
-
-	    let preElements = elementContainer.getElementsByTagName("pre");
-	    for(let p of preElements) {
-	        p["style"]["padding"]="2.5px";
-	        p["style"]["margin"]="5px";
-	        p["style"]["white-space"]="pre-wrap";
-	    }
-	    let stringElements = elementContainer.getElementsByClassName("string");
-	    for(let s of stringElements) {
-	        s["style"]["color"]="green";
-	    }
-	    let numberElements = elementContainer.getElementsByClassName("number");
-	    for(let n of numberElements) {
-	        n["style"]["color"]="darkorange";
-	    }
-	    let booleanElements = elementContainer.getElementsByClassName("boolean");
-	    for(let b of booleanElements) {
-	        b["style"]["color"]="blue";
-	    }
-	    let nullElements = elementContainer.getElementsByClassName("null");
-	    for(let n of nullElements) {
-	        n["style"]["color"]="magenta";
-	    }
-	    let keyElements = elementContainer.getElementsByClassName("key");
-	    for(let k of keyElements) {
-	        k["style"]["color"]="red";
-	    }
 	}
 
 	// Note: Compatible for both IE8, IE9+ and other modern browsers
@@ -133,6 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	    return documentFragment;
 	}
 
+	const mergePropPromptText = '⚠️ 𝐍𝐨𝐭𝐢𝐜𝐞: 𝖸𝗈𝗎 𝖺𝗋𝖾 𝖺𝖻𝗈𝗎𝗍 𝗍𝗈 𝗆𝖾𝗋𝗀𝖾 𝖺𝗅𝗅 𝗉𝗈𝗅𝗒𝗀𝗈𝗇 𝖿𝖾𝖺𝗍𝗎𝗋𝖾𝗌 𝖻𝖺𝗌𝖾𝖽 𝗈𝗇 𝖺𝗍𝗍𝗋𝗂𝖻𝗎𝗍𝖾 ';
+	const updateSuccessAlert = '🔔 𝐀𝐥𝐞𝐫𝐭: 𝖴𝗉𝖽𝖺𝗍𝖾𝖽 𝗌𝗎𝖼𝖼𝖾𝗌𝗌𝖿𝗎𝗅𝗅𝗒!';
+	
 	const delField = '✕';
 	const mergeField = '⧉';
 	const nilField = '';
@@ -225,8 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const imgBounds_Bottom=document.getElementById('imgBounds_Bottom');
 	const imgBounds_Top=document.getElementById('imgBounds_Top');
 
+	// const geojsonDisplayContainer=document.getElementById('geojsonDisplayContainer');
 	function renderFillerTable() {
-		// console.log([mapPropsDatatableContainer,mapPropsDatatable]);
 		if(typeof mapPropsDatatable !== 'undefined') {
 			mapPropsDatatableContainer.removeChild(mapPropsDatatable);
 		}
@@ -237,10 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
     	mapPropsDatatable.appendChild(tbodyRow);
     	mapPropsDatatableContainer.appendChild(mapPropsDatatable);
 
-    	let displayGeoJSONObj = {
-						  		"type": "FeatureCollection",
-						  		"features": []
-					  		};
+    	let displayGeoJSONObj = { 
+    								"type": "FeatureCollection",
+							  		"features": [] 
+							  	};
+  		// geojsonDisplayContainer.innerText=JSON.stringify(displayGeoJSONObj, null, 2);
   		highlightJSON('geojsonDisplayContainer', displayGeoJSONObj);
 	}
 
@@ -359,8 +336,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     prevPoly = turf.union(prevPoly, subPolyArr[uIndex]);
                 }
             }
-            prevPoly['properties']=featurePropsCopy;
-            geojsonOutput['features'].push(prevPoly);
+            if(prevPoly !== null) {
+	            prevPoly['properties']=featurePropsCopy;
+	            geojsonOutput['features'].push(prevPoly);
+	        }
         }
         geojsonOutput['features']=geojsonOutput['features'].concat(nonPolyFeaturesArr);
         return geojsonOutput;
@@ -616,6 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(geojsonObj !== null) {
 				uploadedGeojsonObj=await renderPropsTable(geojsonObj); 
 				highlightJSON('geojsonDisplayContainer', uploadedGeojsonObj);
+				// geojsonDisplayContainer.innerText=JSON.stringify(uploadedGeojsonObj, undefined, 2);
 				let res=await renderGeojsonLayer(uploadedGeojsonObj);
 				console.log(res);
 
@@ -692,57 +672,64 @@ document.addEventListener('DOMContentLoaded', () => {
 		return promise;
 	}
 
+
+	
+
 	function bindMergeBtnPropEvent() {
 		let mergeBtns=document.querySelectorAll('.mergeBtn');
 		for(let mergeBtn of mergeBtns) {
 			mergeBtn.addEventListener('click', async(e)=> {
 				let propToMerge=e.target.value;
-				let geojsonObj=unionPolygons(uploadedGeojsonObj, propToMerge);
 
-				map.removeControl(scale);
-				map.removeControl(zoomControl);
-				map.removeControl(attributionControl);
+				if (confirm(`${mergePropPromptText}[${propToMerge}]. 𝖯𝗅𝖾𝖺𝗌𝖾 𝗌𝖾𝗅𝖾𝖼𝗍 𝗢𝗞 𝗍𝗈 𝗉𝗋𝗈𝖼𝖾𝖾𝖽 𝗈𝗋 𝗖𝗮𝗻𝗰𝗲𝗹 𝗍𝗈 𝖼𝗅𝗈𝗌𝖾 𝗍𝗁𝗂𝗌 𝖽𝗂𝖺𝗅𝗈𝗀.`)) {
+					let geojsonObj=unionPolygons(uploadedGeojsonObj, propToMerge);
 
-				if(typeof mapLayer !== 'undefined') {
-					map.removeLayer(mapLayer);
+					map.removeControl(scale);
+					map.removeControl(zoomControl);
+					map.removeControl(attributionControl);
+
+					if(typeof mapLayer !== 'undefined') {
+						map.removeLayer(mapLayer);
+					}
+					if(typeof pointLayer !== 'undefined') {
+						map.removeLayer(pointLayer);
+					}
+
+					map.eachLayer(function(layer) {
+						map.removeLayer(layer);
+					});
+
+					mapLayer=undefined;
+					pointLayer=undefined;
+
+					imgBounds=null;
+					layerBounds=null;
+					
+					// imgBounds_Left.innerHTML='';
+					// imgBounds_Right.innerHTML='';
+					// imgBounds_Bottom.innerHTML='';
+					// imgBounds_Top.innerHTML='';
+					renderFillerTable();
+
+					uploadedGeojsonObj=await renderPropsTable(geojsonObj); 
+					highlightJSON('geojsonDisplayContainer', uploadedGeojsonObj);
+					// geojsonDisplayContainer.innerText=JSON.stringify(uploadedGeojsonObj, undefined, 2);
+					let res=await renderGeojsonLayer(uploadedGeojsonObj);
+					console.log(res);
+
+					res=await bindDelBtnPropEvent();
+					console.log(res);
+
+					res=await bindMergeBtnPropEvent();
+					console.log(res);
+
+					scale.addTo(map);
+					zoomControl.addTo(map);
+					attributionControl.addTo(map);
+
+					resetMapView();
+					alert(updateSuccessAlert);
 				}
-				if(typeof pointLayer !== 'undefined') {
-					map.removeLayer(pointLayer);
-				}
-
-				map.eachLayer(function(layer) {
-					map.removeLayer(layer);
-				});
-
-				mapLayer=undefined;
-				pointLayer=undefined;
-
-				imgBounds=null;
-				layerBounds=null;
-				
-				// imgBounds_Left.innerHTML='';
-				// imgBounds_Right.innerHTML='';
-				// imgBounds_Bottom.innerHTML='';
-				// imgBounds_Top.innerHTML='';
-				renderFillerTable();
-
-				uploadedGeojsonObj=await renderPropsTable(geojsonObj); 
-				highlightJSON('geojsonDisplayContainer', uploadedGeojsonObj);
-
-				let res=await renderGeojsonLayer(uploadedGeojsonObj);
-				console.log(res);
-
-				res=await bindDelBtnPropEvent();
-				console.log(res);
-
-				res=await bindMergeBtnPropEvent();
-				console.log(res);
-
-				scale.addTo(map);
-				zoomControl.addTo(map);
-				attributionControl.addTo(map);
-
-				resetMapView();
 			});
 		}
 		let promise = new Promise((resolve, reject) => {
@@ -797,7 +784,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		renderFillerTable();
 		triggerEvent(inputSpatialFormatDDL,'change');
 	});
-
 	renderFillerTable();
 	triggerEvent(clearAllBtn,'click');
 });

@@ -19,7 +19,7 @@
 
 ### ✍ Read related post here
 
-[**Article :: Link :: GIS Data Viewer In Leaflet JS - Supports Mixed Geometry Types & GeometryCollection**](https://towardsdatascience.com/render-3d-buildings-in-geospatial-webgl-visualisations-c5325eadb347)
+[**Article :: Link :: GIS Data Viewer In Leaflet JS — Supports Mixed Geometry Types & GeometryCollection**](https://towardsdatascience.com/render-3d-buildings-in-geospatial-webgl-visualisations-c5325eadb347)
 
 ### 📌 Features
 
@@ -32,12 +32,15 @@
 		<li>Combine multiple <strong><a href='https://datatracker.ietf.org/doc/html/rfc7946/#page-23' target='_blank'>Polygon</a></strong> geometry features with <a href='https://support.esri.com/en-us/gis-dictionary/union' target='_blank'>Union</a></li>
 	</ul>
 </div>
+</div>
 
+<div align="left">
 ### 📄 Geospatial Utility Plugins
 </div>
+
 <div align="left">
 	<ul>
-		<li><a href='https://turfjs.org/' target='_blank'>Turf JS</a></li>
+		<li><a href='https://turfjs.org/' target='_blank'>Turf</a></li>
 		<li><a href='https://github.com/placemark/togeojson' target='_blank'>togeojson</a></li>
 		<li><a href='https://github.com/mapbox/tokml' target='_blank'>tokml</a></li>
 		<li><a href='https://github.com/yuletide/node-shp' target='_blank'>node-shp</a></li>

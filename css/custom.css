@@ -50,6 +50,27 @@ body {
     background-clip: content-box;
     background-color: #343a40;
 }
+#geojsonDisplayContainer {
+    font-size: 1.0rem;
+}
+
+#geojsonDisplayContainer .string, 
+#geojsonDisplayContainer .key {
+    color:#ac4142;
+}
+
+#geojsonDisplayContainer pre {
+    padding: 2.5px;
+    margin: 5px;
+    white-space: pre-wrap;
+}
+
+#geojsonDisplayContainer .number,
+#geojsonDisplayContainer .boolean,
+#geojsonDisplayContainer .null {
+    color:#aa759f;
+}
+
 #mapPropsDatatable th {
     white-space: pre;
 }
@@ -121,7 +142,8 @@ path.input-feature:not([fill='none']) {
     opacity:0.85;
     font-size:12px;
 }
-.table-condensed td, .table-condensed th {
+.table-condensed td, 
+.table-condensed th {
     border: 1px solid #dee2e6;
     padding: 0.15rem 0.25rem;
 }
@@ -136,7 +158,6 @@ path.input-feature:not([fill='none']) {
 .tab-content {
     height: calc(100% - 40px);
 }
-
 td.table-placeholder {
     vertical-align: middle;
 }
