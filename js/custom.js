@@ -45,18 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	function syntaxHighlight(json) {
         json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-            var cls = "number";
-            if (/^"/.test(match)) {
-                if (/:$/.test(match)) {
-                    cls = "key";
-                } else {
-                    cls = "string";
-                }
-            } else if (/true|false/.test(match)) {
-                cls = "boolean";
-            } else if (/null/.test(match)) {
-                cls = "null";
-            }
+	            var cls = "number";
+	            if (/^"/.test(match)) {
+	                if (/:$/.test(match)) {
+	                    cls = "key";
+	                } else {
+	                    cls = "string";
+	                }
+	            } else if (/true|false/.test(match)) {
+	                cls = "boolean";
+	            } else if (/null/.test(match)) {
+	                cls = "null";
+	            }
             return "<span class='" + cls + "'>" + match + "</span>";
         });
     }
@@ -133,9 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	    return documentFragment;
 	}
 
-	
-
-
 	const delField = '✕';
 	const mergeField = '⧉';
 	const nilField = '';
@@ -191,44 +188,45 @@ document.addEventListener('DOMContentLoaded', () => {
 		className: 'input-feature rounded-circle'
 	});
 
-	// const command = L.control({
- //    	position: 'topright'
-	// });
-	// command.onAdd = function(map) {
-	// 	let div = L.DomUtil.create("div", "command");
-	// 	let htmlStr = "";
-	// 	htmlStr += "<div class='leaflet-control-layers leaflet-control leaflet-control-layers-expanded m-0 p-1'>";
-	// 	htmlStr += "<div class='leaflet-control-layers-base w-100'>";
-	// 	htmlStr += "<details open>";
-	// 	htmlStr += "<summary><strong>Map Bounds</strong></summary>";
-	// 	htmlStr += "<div id='map-bounds' class='border border-0 m-0 w-100'>";
-	// 	htmlStr += "<div class='leaflet-control-layers-overlays'>";
-	// 	htmlStr += "<table class='table table-bordered table-condensed table-sm m-0'>";
-	// 	htmlStr += "<tr><th colspan='2'><u>X Field:</u></th></tr>";
-	// 	htmlStr += "<tr><th>X</th><td>(Longitude)</td></tr>";
-	// 	htmlStr += "<tr><th>Left:</th><td id='imgBounds_Left'></td></tr>";
-	// 	htmlStr += "<tr><th>Right:</th><td id='imgBounds_Right'></td></tr>";
-	// 	htmlStr += "<tr><th colspan='2'><u>Y Field:</u></th></tr>";
-	// 	htmlStr += "<tr><th>Y</th><td>(Latitude)</td></tr>";
-	// 	htmlStr += "<tr><th>Bottom:</th><td id='imgBounds_Bottom'></td></tr>";
-	// 	htmlStr += "<tr><th>Top:</th><td id='imgBounds_Top'></td></tr>";
-	// 	htmlStr += "</table>";
-	// 	htmlStr += "</div>";
-	// 	htmlStr += "</details>";
-	// 	htmlStr += "</div>";
-	// 	htmlStr += "</div>";	
+	const command = L.control({
+    	position: 'topright'
+	});
+	command.onAdd = function(map) {
+		let div = L.DomUtil.create("div", "command");
+		let htmlStr = "";
+		htmlStr += "<div class='leaflet-control-layers leaflet-control leaflet-control-layers-expanded m-0 p-1'>";
+		htmlStr += "<div class='leaflet-control-layers-base w-100'>";
+		htmlStr += "<details open>";
+		htmlStr += "<summary><strong>Map Bounds</strong></summary>";
+		htmlStr += "<div id='map-bounds' class='border border-0 m-0 w-100'>";
+		htmlStr += "<div class='leaflet-control-layers-overlays'>";
+		htmlStr += "<table class='table table-bordered table-condensed table-sm m-0'>";
+		htmlStr += "<tr><th colspan='2'><u>X Field:</u></th></tr>";
+		htmlStr += "<tr><th>X</th><td>(Longitude)</td></tr>";
+		htmlStr += "<tr><th>Left:</th><td id='imgBounds_Left'></td></tr>";
+		htmlStr += "<tr><th>Right:</th><td id='imgBounds_Right'></td></tr>";
+		htmlStr += "<tr><th colspan='2'><u>Y Field:</u></th></tr>";
+		htmlStr += "<tr><th>Y</th><td>(Latitude)</td></tr>";
+		htmlStr += "<tr><th>Bottom:</th><td id='imgBounds_Bottom'></td></tr>";
+		htmlStr += "<tr><th>Top:</th><td id='imgBounds_Top'></td></tr>";
+		htmlStr += "</table>";
+		htmlStr += "</div>";
+		htmlStr += "</details>";
+		htmlStr += "</div>";
+		htmlStr += "</div>";	
 		
-	// 	div.innerHTML = htmlStr; 
-	// 	return div;
-	// };
-	// command.addTo(map);
+		div.innerHTML = htmlStr; 
+		return div;
+	};
+	command.addTo(map);
 
-	// const imgBounds_Left=document.getElementById('imgBounds_Left');
-	// const imgBounds_Right=document.getElementById('imgBounds_Right');
-	// const imgBounds_Bottom=document.getElementById('imgBounds_Bottom');
-	// const imgBounds_Top=document.getElementById('imgBounds_Top');
+	const imgBounds_Left=document.getElementById('imgBounds_Left');
+	const imgBounds_Right=document.getElementById('imgBounds_Right');
+	const imgBounds_Bottom=document.getElementById('imgBounds_Bottom');
+	const imgBounds_Top=document.getElementById('imgBounds_Top');
 
 	function renderFillerTable() {
+		// console.log([mapPropsDatatableContainer,mapPropsDatatable]);
 		if(typeof mapPropsDatatable !== 'undefined') {
 			mapPropsDatatableContainer.removeChild(mapPropsDatatable);
 		}
@@ -246,18 +244,21 @@ document.addEventListener('DOMContentLoaded', () => {
   		highlightJSON('geojsonDisplayContainer', displayGeoJSONObj);
 	}
 
-	// function renderImageBounds() {
-	// 	imgBounds=map.getBounds();
-	// 	imgBounds_Left.innerHTML=imgBounds._southWest.lng;
-	// 	imgBounds_Right.innerHTML=imgBounds._northEast.lng;
+	function renderImageBounds() {
+		if(typeof mapLayer !== 'undefined' || typeof pointLayer !== 'undefined') {
+			imgBounds=map.getBounds();
+			imgBounds_Left.innerHTML=imgBounds._southWest.lng;
+			imgBounds_Right.innerHTML=imgBounds._northEast.lng;
 
-	// 	imgBounds_Bottom.innerHTML=imgBounds._southWest.lat;
-	// 	imgBounds_Top.innerHTML=imgBounds._northEast.lat;
-	// }
-	// function addMultipleEvents(eventsArray, targetElem, handler) {
-	// 	eventsArray.map((event) => targetElem.on(event, handler));
-	// }
-	// addMultipleEvents(['zoomend', 'dragend', 'viewreset', 'moveend', 'load', 'resize'], map, renderImageBounds);
+			imgBounds_Bottom.innerHTML=imgBounds._southWest.lat;
+			imgBounds_Top.innerHTML=imgBounds._northEast.lat;
+		}
+	}
+	
+	function addMultipleEvents(eventsArray, targetElem, handler) {
+		eventsArray.map((event) => targetElem.on(event, handler));
+	}
+	addMultipleEvents(['zoomend', 'dragend', 'viewreset', 'moveend', 'load', 'resize'], map, renderImageBounds);
 
 	const json2tableOptions = {
         prependHeader: true,
@@ -394,26 +395,35 @@ document.addEventListener('DOMContentLoaded', () => {
 		// [END] combined geojson objects of mapLayer and pointLayer with deleted props
 
 		let outputFileExt='.geojson';
+		let fileData;
 		let outputFormatVal=outputSpatialFormat.value;
 	  	if(outputFormatVal=='GEOJSON') {
 			outputFileExt='.geojson';
 		} else if(outputFormatVal=='KML') {
 			outputFileExt='.kml';
 			updatedGeoData=tokml(updatedGeojsonObj);
+		} else if(outputFormatVal=='SHP') {
+			outputFileExt='.zip';
+			fileData = await shpwrite.zip(updatedGeojsonObj);
+			fileData=`data:application/zip;base64,${fileData}`;
 		}
 
-
-
-		let textblob = new Blob([updatedGeoData], {
-            type: 'text/plain'
-        });
-        let dwnlnk = document.createElement('a');
+		let dwnlnk = document.createElement('a');
         dwnlnk.download = outputSpatialFormatBtn.value + outputFileExt;
-        dwnlnk.href = window.URL.createObjectURL(textblob);
+
+        if(outputFormatVal=='GEOJSON' || outputFormatVal=='KML') {
+        	let fileBlob = new Blob([updatedGeoData], {
+	            type: 'text/plain'
+	        });
+        	fileData=window.URL.createObjectURL(fileBlob);
+        }
+		
+        dwnlnk.href = fileData;
         dwnlnk.click();
 	});
 
     async function renderPropsTable(geojsonObj) {
+    	// console.log([mapPropsDatatableContainer,mapPropsDatatable]);
     	if(typeof mapPropsDatatable !== 'undefined') {
 			mapPropsDatatableContainer.removeChild(mapPropsDatatable);
 		}
@@ -533,27 +543,37 @@ document.addEventListener('DOMContentLoaded', () => {
     			pointGeojsonObj['features'].push(geojsonInputFeature);
     	  	}
     	}
-		mapLayer = L.geoJSON(mapGeojsonObj, {
-		    style: function (feature) {
-		        return {
-		        	color: '#616366', // rgb(97 99 102) // #dc3b3b | rgb(220 59 59)
-		        	weight: 1.75,
-		        	className: 'input-feature'
-		        }
-		    }
-		})
-		.bindPopup((layer)=>jsonObjToHTMLTable(layer.feature.properties))
-		.addTo(map);
 		
-		pointLayer = L.geoJSON(pointGeojsonObj, {
-		    pointToLayer: function (feature, latlng) {
-		        let marker=L.marker(latlng, {
-		        	icon: markerIcon
-		        }).bindPopup(jsonObjToHTMLTable(feature.properties));
-		        return marker;
-		    }
-		}).addTo(map);
 
+		if(mapGeojsonObj['features'].length === 0) {
+			mapLayer=undefined;
+		} else {
+			mapLayer = L.geoJSON(mapGeojsonObj, {
+			    style: function (feature) {
+			        return {
+			        	color: '#616366', // rgb(97 99 102) // #dc3b3b | rgb(220 59 59)
+			        	weight: 1.75,
+			        	className: 'input-feature'
+			        }
+			    }
+			})
+			.bindPopup((layer)=>jsonObjToHTMLTable(layer.feature.properties))
+			.addTo(map);		
+		}
+		if(pointGeojsonObj['features'].length === 0) {
+			pointLayer=undefined;
+		} else {
+			pointLayer = L.geoJSON(pointGeojsonObj, {
+			    pointToLayer: function (feature, latlng) {
+			        let marker=L.marker(latlng, {
+			        	icon: markerIcon
+			        }).bindPopup(jsonObjToHTMLTable(feature.properties));
+			        return marker;
+			    }
+			}).addTo(map);
+
+			// console.log(pointLayer);
+		}
 		let promise = new Promise((resolve, reject) => {
 		    setTimeout(() => resolve('renderGeojsonLayer'), 100)
 		});
@@ -609,10 +629,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				zoomControl.addTo(map);
 				attributionControl.addTo(map);
 
-				map.fitBounds(mapLayer.getBounds());
 				resetMapView();
-        	}
-
+			}
             inputSpatialFormatDDL.disabled=true;
 			inputSpatialFormatBtn.disabled=true;
 
@@ -625,8 +643,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	
 	function resetMapView() {
-		let layerBounds=mapLayer.getBounds();
-		map.fitBounds(layerBounds);
+		// console.log([mapLayer,pointGeojsonObj]);
+		if(typeof mapLayer !== 'undefined') {
+			let layerBounds=mapLayer.getBounds();
+			map.fitBounds(layerBounds);
+		} else {
+			const center = turf.center(pointGeojsonObj);
+			// console.log(center);
+			// var center = turf.point([103.83254, 1.28454]);
+			let radius = 5;
+			let bearing1 = 25;
+			let bearing2 = 45;
+
+			let sector = turf.sector(center, radius, bearing1, bearing2);
+			// console.log(sector);
+			let sectorLayer=L.geoJSON(sector);
+			// console.log(sector);
+			map.fitBounds(sectorLayer.getBounds());
+		}
 	}
 	resetMapViewBtn.addEventListener('click', () => {	
 		resetMapView();
@@ -669,12 +703,19 @@ document.addEventListener('DOMContentLoaded', () => {
 				map.removeControl(zoomControl);
 				map.removeControl(attributionControl);
 
-				map.removeLayer(mapLayer);
-				map.removeLayer(pointLayer);
+				if(typeof mapLayer !== 'undefined') {
+					map.removeLayer(mapLayer);
+				}
+				if(typeof pointLayer !== 'undefined') {
+					map.removeLayer(pointLayer);
+				}
 
 				map.eachLayer(function(layer) {
 					map.removeLayer(layer);
 				});
+
+				mapLayer=undefined;
+				pointLayer=undefined;
 
 				imgBounds=null;
 				layerBounds=null;
@@ -683,12 +724,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				// imgBounds_Right.innerHTML='';
 				// imgBounds_Bottom.innerHTML='';
 				// imgBounds_Top.innerHTML='';
-
-				if(typeof mapPropsDatatable !== 'undefined') {
-					mapPropsDatatableContainer.removeChild(mapPropsDatatable);
-				}
+				renderFillerTable();
 
 				uploadedGeojsonObj=await renderPropsTable(geojsonObj); 
+				highlightJSON('geojsonDisplayContainer', uploadedGeojsonObj);
+
 				let res=await renderGeojsonLayer(uploadedGeojsonObj);
 				console.log(res);
 
@@ -702,7 +742,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				zoomControl.addTo(map);
 				attributionControl.addTo(map);
 
-				map.fitBounds(mapLayer.getBounds());
 				resetMapView();
 			});
 		}
@@ -735,6 +774,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			map.removeLayer(pointLayer);
 		}
 
+		map.eachLayer(function(layer) {
+			map.removeLayer(layer);
+		});
+
+		mapLayer=undefined;
+		pointLayer=undefined;
+
 		imgBounds=null;
 		layerBounds=null;
 
@@ -743,10 +789,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		inputSpatialFormatBtn.value='';
 		outputSpatialFormatBtn.value='';
 
-		// imgBounds_Left.innerHTML='';
-		// imgBounds_Right.innerHTML='';
-		// imgBounds_Bottom.innerHTML='';
-		// imgBounds_Top.innerHTML='';
+		imgBounds_Left.innerHTML='';
+		imgBounds_Right.innerHTML='';
+		imgBounds_Bottom.innerHTML='';
+		imgBounds_Top.innerHTML='';
 
 		renderFillerTable();
 		triggerEvent(inputSpatialFormatDDL,'change');
@@ -754,276 +800,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	renderFillerTable();
 	triggerEvent(clearAllBtn,'click');
-
-
-	
-	
-	
-  	
-
-
-	/*
-	const uploadGeoJsonFile = document.getElementById("uploadGeoJsonFile");
-    const exportGeoCSVOutputBtn = document.getElementById("exportGeoCSVOutputBtn");
-
-    function polygonExtractionFromFeatureCollection(geojsonObj) {
-      	let updatedGeojsonObj={
-            "type":"FeatureCollection",
-            "features": []
-      	};
-      	let geojsonInputFeatures=geojsonObj["features"];
-
-      for(let g in geojsonInputFeatures) {
-          let geojsonInputFeature=geojsonInputFeatures[g];
-          let featureProps=geojsonInputFeature["properties"];
-          let featureGeometry=geojsonInputFeature["geometry"];
-          let featureGeometryType=featureGeometry["type"];
-
-          let newPropertiesObj=JSON.parse(JSON.stringify(featureProps));
-
-          if(featureGeometryType=="Polygon") {
-            newPropertiesObj["SUBID"]=g+"_"+0;
-			let updatedGeojsonObjFeature={
-				"type":"Feature",
-				"properties": newPropertiesObj,
-				"geometry":featureGeometry
-			};
-			updatedGeojsonObj["features"].push(updatedGeojsonObjFeature);
-          } else if(featureGeometryType=="MultiPolygon") {
-              let multiPolyCoords=featureGeometry["coordinates"];
-              for(let m1 in multiPolyCoords) {
-                for(let m2 in multiPolyCoords[m1]) {
-                  let polyCoords=[multiPolyCoords[m1][m2]];
-                  newPropertiesObj["SUBID"]=m1+"_"+m2;
-                    let updatedGeojsonObjFeature={
-                      "type":"Feature",
-                      "properties":newPropertiesObj,
-                      "geometry": {
-                          "type":"Polygon",
-                          "coordinates":polyCoords
-                      }
-                    };
-                    updatedGeojsonObj["features"].push(updatedGeojsonObjFeature);
-                }
-              }
-          } else if(featureGeometryType=="GeometryCollection") {
-              let geometriesArr=featureGeometry["geometries"];
-              for(let g2 in geometriesArr) {
-                  let geometrySubObj=geometriesArr[g2];
-                  let geometrySubType=geometrySubObj["type"];
-                  if(geometrySubType=="Polygon") {
-                      let polyCoords=geometrySubObj["coordinates"];
-                      newPropertiesObj["SUBID"]=0;
-                      let updatedGeojsonObjFeature={
-                          "type":"Feature",
-                          "properties":newPropertiesObj,
-                          "geometry":{
-                            "type":"Polygon",
-                              "coordinates":polyCoords
-                          }
-                      };
-                      updatedGeojsonObj["features"].push(updatedGeojsonObjFeature);
-                  } else if(geometrySubType=="MultiPolygon") {
-                      let multiPolyCoords=geometrySubObj["geometry"]["coordinates"];
-                      for(let m1 in multiPolyCoords) {
-                        for(let m2 in multiPolyCoords[m1]) {
-                          let polyCoords=[multiPolyCoords[m1][m2]];
-                          newPropertiesObj["SUBID"]=m1+"_"+m2;
-                          let updatedGeojsonObjFeature={
-                            "type":"Feature",
-                            "properties":newPropertiesObj,
-                            "geometry":{
-                                "type":"Polygon",
-                                "coordinates":polyCoords
-                            }
-                          };
-                          updatedGeojsonObj["features"].push(updatedGeojsonObjFeature);
-                        }
-                      }
-                  } else {
-                    newPropertiesObj["SUBID"]=0;
-                    let updatedGeojsonObjFeature={
-                      "type":"Feature",
-                      "properties": newPropertiesObj,
-                      "geometry":geometrySubObj
-                    }
-                    updatedGeojsonObj["features"].push(updatedGeojsonObjFeature);
-                  }
-              } // end for-loop
-          } else {
-            newPropertiesObj["SUBID"]=g+"_"+0;
-            let updatedGeojsonObjFeature={
-              "type":"Feature",
-              "properties": newPropertiesObj,
-              "geometry":featureGeometry
-            }
-            updatedGeojsonObj["features"].push(updatedGeojsonObjFeature);
-          } 
-      	}
-
-      	return updatedGeojsonObj;
-  	}
-
-  	const json2csvOptions={
-        prependHeader: true,
-        sortHeader: true,
-        trimFieldValues: true,
-        trimHeaderFields: true,
-        emptyFieldValue: "",
-        delimiter: {
-            field: ",",
-            wrap: "\"",
-            eol: "\n"
-        }
-    };
-
-  	exportGeoCSVOutputBtn.addEventListener('click', async(e) => {
-	    let geojsonObj = polygonExtractionFromFeatureCollection(uploadedGeojsonObj);
-	    let uploadedGeojsonObj = JSON.parse(JSON.stringify(geojsonObj));
-
-	    let features = uploadedGeojsonObj["features"];
-	    let outputJSONObj = [];       
-
-	    for(let f in features) {
-	      let feature = features[f];
-	      let ptOrder = 0;
-	      let outputJSONObjRecord = {};
-	      
-	      if(Object.keys(feature).includes("type") && Object.keys(feature).includes("geometry")) {
-	        if(feature["type"]=="Feature" && Object.keys(feature["geometry"]).includes("type") && Object.keys(feature["geometry"]).includes("coordinates")) {
-	          let properties = feature["properties"];
-	          if(typeof properties !== "undefined") {
-	              for(let p in properties) {
-	                outputJSONObjRecord[p]=properties[p]; // property key --> property value
-	              }
-	          }
-	          let geometry = feature["geometry"];
-	          let geometryType = geometry["type"];
-	          let coordinates = geometry["coordinates"];
-
-	          if(geometryType == "Polygon") {
-	              coordinates = coordinates[0];
-	              for(let c in coordinates) {
-	                let latlng = coordinates[c];
-	                let lat = latlng[1];
-	                let lng = latlng[0];
-
-	                let outputJSONObjRecord_Copy = JSON.parse(JSON.stringify(outputJSONObjRecord));
-
-	                outputJSONObjRecord_Copy["Feature ID"]=f;
-	                outputJSONObjRecord_Copy["Sub Feature ID"]=f;
-	                outputJSONObjRecord_Copy["Geometry Type"]=geometryType;
-	                outputJSONObjRecord_Copy["Point Order"]=ptOrder++;
-	                outputJSONObjRecord_Copy["X"]=parseFloat(lng);
-	                outputJSONObjRecord_Copy["Y"]=parseFloat(lat);
-
-	                outputJSONObj.push(outputJSONObjRecord_Copy);
-	              }
-	          } else if(geometryType == "MultiPolygon") {
-	              for(let i in coordinates) {
-	                let polycoordinates = coordinates[i];
-	                polycoordinates = polycoordinates[0];
-	          
-	                for(let c in polycoordinates) {
-	                  let latlng = polycoordinates[c];
-	                  let lat = latlng[1];
-	                  let lng = latlng[0];
-
-	                  let outputJSONObjRecord_Copy = JSON.parse(JSON.stringify(outputJSONObjRecord));
-
-	                  outputJSONObjRecord_Copy["Feature ID"]=f;
-	                  outputJSONObjRecord_Copy["Sub Feature ID"]=i;
-	                  outputJSONObjRecord_Copy["Geometry Type"]=geometryType;
-	                  outputJSONObjRecord_Copy["Point Order"]=ptOrder++;
-	                  outputJSONObjRecord_Copy["X"]=parseFloat(lng);
-	                  outputJSONObjRecord_Copy["Y"]=parseFloat(lat);
-
-	                  outputJSONObj.push(outputJSONObjRecord_Copy);
-	                }
-	              }
-	          } else if(geometryType == "Point") {
-	              let latlng = coordinates;
-	              let lat = latlng[1];
-	              let lng = latlng[0];
-
-	              let outputJSONObjRecord_Copy = JSON.parse(JSON.stringify(outputJSONObjRecord));
-
-	              outputJSONObjRecord_Copy["Feature ID"]=f;
-	              outputJSONObjRecord_Copy["Sub Feature ID"]=f;
-	              outputJSONObjRecord_Copy["Geometry Type"]=geometryType;
-	              outputJSONObjRecord_Copy["Point Order"]=ptOrder++;
-	              outputJSONObjRecord_Copy["X"]=parseFloat(lng);
-	              outputJSONObjRecord_Copy["Y"]=parseFloat(lat);
-
-	              outputJSONObj.push(outputJSONObjRecord_Copy);
-	          } else if(geometryType == "MultiPoint") {
-	              for(let i in coordinates) {
-	                let polycoordinates = coordinates[i];
-	                let latlng = polycoordinates;
-	                let lat = latlng[1];
-	                let lng = latlng[0];
-
-	                let outputJSONObjRecord_Copy = JSON.parse(JSON.stringify(outputJSONObjRecord));
-
-	                outputJSONObjRecord_Copy["Feature ID"]=f;
-	                outputJSONObjRecord_Copy["Sub Feature ID"]=i;
-	                outputJSONObjRecord_Copy["Geometry Type"]=geometryType;
-	                outputJSONObjRecord_Copy["Point Order"]=ptOrder++;
-	                outputJSONObjRecord_Copy["X"]=parseFloat(lng);
-	                outputJSONObjRecord_Copy["Y"]=parseFloat(lat);
-
-	                outputJSONObj.push(outputJSONObjRecord_Copy);
-	              }
-	          } else if(geometryType == "LineString") { 
-	              for(let c in coordinates) {
-	                let latlng = coordinates[c];
-	                let lat = latlng[1];
-	                let lng = latlng[0];
-
-	                let outputJSONObjRecord_Copy = JSON.parse(JSON.stringify(outputJSONObjRecord));
-
-	                outputJSONObjRecord_Copy["Feature ID"]=f;
-	                outputJSONObjRecord_Copy["Sub Feature ID"]=f;
-	                outputJSONObjRecord_Copy["Geometry Type"]=geometryType;
-	                outputJSONObjRecord_Copy["Point Order"]=ptOrder++;
-	                outputJSONObjRecord_Copy["X"]=parseFloat(lng);
-	                outputJSONObjRecord_Copy["Y"]=parseFloat(lat);
-
-	                outputJSONObj.push(outputJSONObjRecord_Copy);
-	              }
-	          } else if(geometryType == "MultiLineString") {
-	            for(let i in coordinates) {
-	              let polycoordinates = coordinates[i];     
-	              for(let c in polycoordinates) {
-	                let latlng = polycoordinates[c];
-	                let lat = latlng[1];
-	                let lng = latlng[0];
-
-	                let outputJSONObjRecord_Copy = JSON.parse(JSON.stringify(outputJSONObjRecord));
-
-	                outputJSONObjRecord_Copy["Feature ID"]=f;
-	                outputJSONObjRecord_Copy["Sub Feature ID"]=i;
-	                outputJSONObjRecord_Copy["Geometry Type"]=geometryType;
-	                outputJSONObjRecord_Copy["Point Order"]=ptOrder++;
-	                outputJSONObjRecord_Copy["X"]=parseFloat(lng);
-	                outputJSONObjRecord_Copy["Y"]=parseFloat(lat);
-
-	                outputJSONObj.push(outputJSONObjRecord_Copy);
-	              }
-	            }
-	          }
-	        } // ensure feature objects are being read
-	      } // ensure it's a feature-type
-	    } // end-for-loop per feature
-
-	    
-		let csvDataOutput = await converter.json2csvAsync(outputJSONObj, json2csvOptions);
-		let textblob = new Blob([csvDataOutput], {
-			type: "text/plain"
-		});
-		let dwnlnk = document.createElement("a");
-		dwnlnk.download = exportGeoCSVOutputBtn.value + ".csv";
-		dwnlnk.click();
-	}); // exportCSVOutBtn Function
-	*/
 });

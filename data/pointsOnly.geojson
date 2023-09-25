@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.83254,
+          1.28454
+        ]
+      },
+      "properties": {
+        "title": "Origin",
+        "name": "TIONG BAHRU MARKET"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.82196,
+          1.26557
+        ]
+      },
+      "properties": {
+        "title": "Destination",
+        "name": "VIVO CITY"
+      }
+    }
+  ]
+}

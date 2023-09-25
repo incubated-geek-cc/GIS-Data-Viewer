@@ -14,6 +14,7 @@
     <link rel='stylesheet' href='css/leaflet-1.3.1.css' />
     <script type='text/javascript' src='js/leaflet-1.3.1.js'></script>
     <script type='text/javascript' src='js/shp.min.js'></script>
+    <script type='text/javascript' src='js/shpwrite.js'></script>
 	<script type='text/javascript' src='js/KMLStrtoGeoJSON.js'></script>
 	<script type='text/javascript' src='js/tokml.js'></script>
 	<script type='text/javascript' src='js/json2csv.js'></script>
@@ -56,6 +57,7 @@
 			        <select id='outputSpatialFormat' class='custom-select rounded-0' disabled>
 			        	<option value="GEOJSON">GEOJSON</option>
 						<option value="KML">KML</option>
+						<option value='SHP'>SHP</option>
 			        </select>
 			        <div class="input-group-append rounded-0">
 			           <span class="input-group-text p-0 bg-none border-0"><button id='outputSpatialFormatBtn' type='button' class='btn btn-sm bg-success text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 ml-2 mr-1' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Save output as spatial data file</p>" disabled>⭳</button></span>
@@ -88,7 +90,7 @@
 				  </div>
 				  <!-- ⅰⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ ⅺ ⅻ -->
 				  <div role="tabpanel" class="tab-pane fade h-100" aria-labelledby="geojson-tab" id="geojson">
-				  	<div id='geojsonDisplayContainer' class='tabContainer table-responsive-sm h-100 m-1'></div>
+				  	<div id='geojsonDisplayContainer' class='tabContainer table-responsive-sm h-100'></div>
 				  </div>
 				</div>
 
