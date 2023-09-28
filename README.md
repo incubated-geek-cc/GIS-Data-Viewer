@@ -13,6 +13,8 @@
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/demo.gif' width="600px" />
 <br>
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/mergePolygons.gif' width="600px" />
+<br>
+<img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/detbtn_function.png' width="600px" />
 
 ### 🌟 Try it yourself
 [**Live Demo :: Link**](https://incubated-geek-cc.github.io/GIS-Data-Viewer/)
