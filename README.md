@@ -11,13 +11,13 @@
 
 ### 👀 Preview
 
-<strong>Demo (1) Import and render map display</strong>
+#### Demo (1) Import and render map display
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/demo.gif' width="600px" />
-<br>
-<strong>Demo (2) Merge Polygon features</strong>
+
+#### Demo (2) Merge Polygon features
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/mergePolygons.gif' width="600px" />
-<br>
-<strong>Demo (3) Attribute removal</strong>
+
+#### Demo (3) Attribute removal
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/delbtn_function.png' width="600px" />
 
 ### 🌟 Try it yourself
