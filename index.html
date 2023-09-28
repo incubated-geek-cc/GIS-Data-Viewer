@@ -45,9 +45,9 @@
 				</div>
 			</div>
 			<div class="bg-none float-left rounded-0 p-1 btn-group btn-group-sm ml-1 mr-1">
-				<button id='resetMapViewBtn' type='button' class='btn btn-sm bg-secondary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Re-positions map to its default bounds and zoom level</p>">⌖</button>
+				<button id='resetMapViewBtn' type='button' class='btn btn-sm bg-secondary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2 function-btn' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Re-positions map to its default bounds and zoom level</p>">⌖</button>
 
-			  	<button id='clearAllBtn' type='button' class='btn btn-sm bg-secondary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>To reset all filters to its default states and clear all rendered map layers</p>">⭮</button>
+			  	<button id='clearAllBtn' type='button' class='btn btn-sm bg-secondary text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 mr-2 function-btn' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>To reset all filters to its default states and clear all rendered map layers</p>">⭮</button>
 			</div>
 			<div class='bg-none float-right p-0'>
 	 			<div class="input-group">
@@ -60,7 +60,7 @@
 						<option value='SHP'>SHP</option>
 			        </select>
 			        <div class="input-group-append rounded-0">
-			           <span class="input-group-text p-0 bg-none border-0"><button id='outputSpatialFormatBtn' type='button' class='btn btn-sm bg-success text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 ml-2 mr-1' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Save output as spatial data file</p>" disabled>⭳</button></span>
+			           <span class="input-group-text p-0 bg-none border-0"><button id='outputSpatialFormatBtn' type='button' class='btn btn-sm bg-success text-white border-white symbol rounded-circle pl-1 pr-1 pt-0 pb-0 ml-2 mr-1 function-btn' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Save output as spatial data file</p>" disabled>⭳</button></span>
 			        </div>
 		    	</div>
 	    	</div>
@@ -74,31 +74,34 @@
 			<div class="col-sm-5 bg-light border h-100 no-gutters small">
 				<!-- Nav tabs -->
 				<ul id="panelTabs" class="nav nav-tabs symbol" role="tablist">
-				  <li class="nav-item w-25">
-				    <a class="nav-link symbol active" id="table-tab" href="#table" data-toggle="tab" data-height="true" aria-controls="table" aria-selected="true" role="tab"><span class='lead tabSymbol'>▦</span> Table <button type="button" class="btn btn-sm rounded-circle" data-toggle="popover" data-title="Merge/Delete Attribute(s)" data-dismissible="true" data-placement="right" data-content='<div class="row">
+				  <li class="nav-item w-30">
+				    <a class="nav-link symbol pr-1 active" id="table-tab" href="#table" data-toggle="tab" data-height="true" aria-controls="table" aria-selected="true" role="tab"><span class='lead tabSymbol'>▦</span> Table <button type="button" class="p-1 m-0 btn btn-sm btn-dark symbol float-right" data-toggle="popover" data-title="Merge/Delete Attribute(s)" data-dismissible="true" data-placement="right" data-content='<div class="row">
 	                        <div class="col-sm-12" style="text-align:left">
 	                            <p><span class="symbol">❶</span> <span class="symbolInfo rounded-circle bg-info symbol text-center text-white">⧉</span> Merge Polygons based on attribute</p>
 	                            <p><span class="symbol">❷</span> <span class="symbolInfo rounded-circle bg-danger symbol text-center text-white">✕</span> Select to exclude from exported output</p>
 	                        </div>
-	                    </div>'><span class='symbol'>🛈<span></button></a>
-				  </li>
-				  
-				  <li class="nav-item w-25">
-				    <a class="nav-link symbol" id="geojson-tab" href="#geojson" data-toggle="tab" data-height="true" aria-controls="geojson" aria-selected="false" role="tab"><span class='lead tabSymbol'>👁</span> GeoJSON</a>
-				  </li>
+	                    </div>'><span class='unicode'>ᶜˡⁱᶜᵏ</span></button>
 
+
+	                    
+
+                    </a>
+				  </li>
 				  
+				  <li class="nav-item w-30">
+				    <a class="nav-link symbol pr-1" id="geojson-tab" href="#geojson" data-toggle="tab" data-height="true" aria-controls="geojson" aria-selected="false" role="tab"><span class='lead tabSymbol'>👁</span> GeoJSON <button id='copyGeojsonDisplay' type='button' data-original-title="<p class='mb-0 small text-left'>Copies GeoJSON text to clipboard</p>" data-toggle="tooltip" class='p-1 m-0 btn btn-sm btn-dark symbol float-right'><span class='unicode'>ᶜᵒᵖʸ</span></button>
+				    </a>
+				  </li>
 
 				</ul>
 
-				<!-- Tab panes -->
+				<!-- Tab panes ⿻ -->
 				<div class="tab-content">
 				  <div role="tabpanel" class="tab-pane fade h-100 active show" aria-labelledby="table-tab" id="table">
 				  	<div id='mapPropsDatatableContainer' class='tabContainer table-responsive-sm h-100'></div>
 				  </div>
 				  <!-- ⅰⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ ⅺ ⅻ -->
 				  <div role="tabpanel" class="tab-pane fade h-100" aria-labelledby="geojson-tab" id="geojson">
-				  	<button id='copyGeojsonDisplay' class='btn btn-sm btn-outline-info symbol p-1 m-1 rounded-0 small' type='button' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Copies GeoJSON text to clipboard</p>">⿻ ᴄᴏᴘʏ</button>
 				  	<div id='geojsonDisplayContainer' class='tabContainer'></div>
 				  </div>
 				</div>

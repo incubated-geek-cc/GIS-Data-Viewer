@@ -237,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	const imgBounds_Bottom=document.getElementById('imgBounds_Bottom');
 	const imgBounds_Top=document.getElementById('imgBounds_Top');
 
-	// const geojsonDisplayContainer=document.getElementById('geojsonDisplayContainer');
 	function renderFillerTable() {
 		if(typeof mapPropsDatatable !== 'undefined') {
 			mapPropsDatatableContainer.removeChild(mapPropsDatatable);
@@ -249,11 +248,13 @@ document.addEventListener('DOMContentLoaded', () => {
     	mapPropsDatatable.appendChild(tbodyRow);
     	mapPropsDatatableContainer.appendChild(mapPropsDatatable);
 
+    	mapPropsDatatableContainer.classList.add('no-pointer-events');
+    	mapPropsDatatableContainer.classList.add('unselectable');
+    	
     	let displayGeoJSONObj = { 
     								"type": "FeatureCollection",
 							  		"features": [] 
 							  	};
-  		// geojsonDisplayContainer.innerText=JSON.stringify(displayGeoJSONObj, null, 2);
   		highlightJSON('geojsonDisplayContainer', displayGeoJSONObj);
 	}
 
@@ -443,7 +444,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
     async function renderPropsTable(geojsonObj) {
-    	// console.log([mapPropsDatatableContainer,mapPropsDatatable]);
+    	mapPropsDatatableContainer.classList.remove('no-pointer-events');
+    	mapPropsDatatableContainer.classList.remove('unselectable');
+    	
     	if(typeof mapPropsDatatable !== 'undefined') {
 			mapPropsDatatableContainer.removeChild(mapPropsDatatable);
 		}
@@ -664,7 +667,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if(geojsonObj !== null) {
 				uploadedGeojsonObj=await renderPropsTable(geojsonObj); 
 				highlightJSON('geojsonDisplayContainer', uploadedGeojsonObj);
-				// geojsonDisplayContainer.innerText=JSON.stringify(uploadedGeojsonObj, undefined, 2);
 				let res=await renderGeojsonLayer(uploadedGeojsonObj);
 				console.log(res);
 
@@ -762,7 +764,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 					uploadedGeojsonObj=await renderPropsTable(geojsonObj); 
 					highlightJSON('geojsonDisplayContainer', uploadedGeojsonObj);
-					// geojsonDisplayContainer.innerText=JSON.stringify(uploadedGeojsonObj, undefined, 2);
 					let res=await renderGeojsonLayer(uploadedGeojsonObj);
 					console.log(res);
 

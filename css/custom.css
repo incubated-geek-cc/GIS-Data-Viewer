@@ -21,9 +21,16 @@ body {
 .w-40 {
 	width:40%!important;
 }
+.w-30 {
+    width:30%!important;
+}
 .h-60 {
 	height:60%!important;
 }
+.h-30 {
+    height:30%!important;
+}
+
 #menu-bar {
     position: absolute;
     z-index: 999;
@@ -52,7 +59,7 @@ body {
 }
 #geojsonDisplayContainer {
     font-size: 1.0rem;
-    height: calc(100% - 2.95rem);
+    height: calc(100% - 1em);
 }
 
 #geojsonDisplayContainer .string, 
@@ -97,10 +104,7 @@ div.leaflet-popup-content div.table-responsive-sm tr:nth-child(even) {
     background: #f7f7f7;
 }
 
-#resetMapViewBtn, 
-#clearAllBtn, 
-#outputSpatialFormatBtn,
-#exportGeoCSVOutputBtn {
+button.function-btn {
 	width: 34px;
     height: 34px;
     font-kerning: none;
@@ -177,6 +181,6 @@ span.symbolInfo.bg-danger {
   -ms-user-select: none;
 }
 
-.pointer-events {
+.no-pointer-events {
   pointer-events: none;
 }
