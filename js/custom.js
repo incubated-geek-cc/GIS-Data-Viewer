@@ -4,6 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	ArcGIS: https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-GeoJSONLayer.html
 	https://gis.stackexchange.com/questions/38863/how-to-render-a-table-with-mixed-geometry-types-in-qgis
 	*/
+
+	const popoverTargets = document.querySelectorAll('[data-content]');
+
+	Array.from(popoverTargets).map(
+	  popTarget => new BSN.Popover(popTarget, {
+	    placement: 'right',
+	    animation: 'show',
+	    delay: 100,
+	    dismissible: true,
+	    trigger: 'click'
+	  })
+	);
+
 	const panelTabs = document.getElementById('panelTabs');
 	const panelTabsCollection = panelTabs.getElementsByTagName('a');
 	Array.from(panelTabsCollection).map(tab => new BSN.Tab( tab, {height: true} ));
@@ -473,6 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
     	try {
         	let headerRow=mapPropsDatatable.rows[0];
 			let headerCols=headerRow.querySelectorAll('th');
+			let colIndex=0;
 			for(let headerCol of headerCols) {
 				let colField = headerCol.innerText;
 				let hrEle = document.createElement('hr');

@@ -75,12 +75,20 @@
 				<!-- Nav tabs -->
 				<ul id="panelTabs" class="nav nav-tabs symbol" role="tablist">
 				  <li class="nav-item w-25">
-				    <a class="nav-link symbol active" id="table-tab" href="#table" data-toggle="tab" data-height="true" aria-controls="table" aria-selected="true" role="tab"><span class='lead tabSymbol'>▦</span> Table</a>
+				    <a class="nav-link symbol active" id="table-tab" href="#table" data-toggle="tab" data-height="true" aria-controls="table" aria-selected="true" role="tab"><span class='lead tabSymbol'>▦</span> Table <button type="button" class="btn btn-sm rounded-circle" data-toggle="popover" data-title="Merge/Delete Attribute(s)" data-dismissible="true" data-placement="right" data-content='<div class="row">
+	                        <div class="col-sm-12" style="text-align:left">
+	                            <p><span class="symbol">❶</span> <span class="symbolInfo rounded-circle bg-info symbol text-center text-white">⧉</span> Merge Polygons based on attribute</p>
+	                            <p><span class="symbol">❷</span> <span class="symbolInfo rounded-circle bg-danger symbol text-center text-white">✕</span> Select to exclude from exported output</p>
+	                        </div>
+	                    </div>'><span class='symbol'>🛈<span></button></a>
 				  </li>
 				  
 				  <li class="nav-item w-25">
 				    <a class="nav-link symbol" id="geojson-tab" href="#geojson" data-toggle="tab" data-height="true" aria-controls="geojson" aria-selected="false" role="tab"><span class='lead tabSymbol'>👁</span> GeoJSON</a>
 				  </li>
+
+				  
+
 				</ul>
 
 				<!-- Tab panes -->
