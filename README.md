@@ -14,14 +14,14 @@
 <br>
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/mergePolygons.gif' width="600px" />
 <br>
-<img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/detbtn_function.png' width="600px" />
+<img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/delbtn_function.png' width="600px" />
 
 ### 🌟 Try it yourself
 [**Live Demo :: Link**](https://incubated-geek-cc.github.io/GIS-Data-Viewer/)
 
 ### ✍ Read related post here
 
-[**Article :: Link :: GIS Data Viewer In Leaflet JS - For Standalone & Offline Use**](https://towardsdatascience.com/render-3d-buildings-in-geospatial-webgl-visualisations-c5325eadb347)
+[**Article :: Link :: GIS Data Viewer In Leaflet JS - For Standalone & Offline Use**](https://geek-cc.medium.com/gis-data-viewer-in-leaflet-js-for-standalone-offline-use-758ed2abe1a7)
 
 ### 📌 Features
 
