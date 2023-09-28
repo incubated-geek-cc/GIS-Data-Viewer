@@ -67,6 +67,28 @@ document.addEventListener('DOMContentLoaded', () => {
 	    elementContainer.appendChild(document.createElement("pre")).innerHTML=syntaxHighlight(JSON.stringify(jsonObj, undefined, 2));
 	}
 
+	function selectCopyText(nodeId) {
+	    let isVal=true;
+	    let node = document.getElementById(nodeId);
+	    try {
+	        node.select();
+	        try { node.setSelectionRange(0, 99999);} catch(err0) {}
+	    } catch(err) {
+	        isVal=false;
+	        if (document.body.createTextRange) {
+	            const range = document.body.createTextRange();
+	            range.moveToElementText(node);
+	            range.select();
+	        } else if (window.getSelection) {
+	            const selection = window.getSelection();
+	            const range = document.createRange();
+	            range.selectNodeContents(node);
+	            selection.removeAllRanges();
+	            selection.addRange(range);
+	        } else { console.warn("Could not select text in node: Unsupported browser."); }
+	    } finally { navigator.clipboard.writeText(isVal ? node.value : node.innerText);}
+	}
+
 	// Note: Compatible for both IE8, IE9+ and other modern browsers
 	function triggerEvent(el, type) {
 	    let e = ( ('createEvent' in document) ? document.createEvent('HTMLEvents') : document.createEventObject() );
@@ -150,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const attributionControl = L.control.attribution({
       prefix: '<span class="prefix-attribution pr-1 pl-1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAXZJREFUKFNjZMABZp5JYxVm+az2+z/DpkjD5cowZYzY1IMUi/P+7Pzz+3cMJze76LMHH2VTHdc9AanF0DDjYLCqjBzfLCYmJoffv34zsLAyM7x/+a0rxnxlOYaGpaejlLgF2FaxszMb//r5m+HL528MQiL8DN++/L4arLVIB0PDxlvx69g4WAJBEm9evWfg4eVi4OBkZ/j7l+Gqj+JcVA2zDgb5ySoIboQ58trFuwxa+nC/XvWUQ9Ow8XbCFTZ2Zm2Q6dcv3mXQ0FNiYGSEePHv739XfZTno9qw/VHyFQYGBu3PH78yPH/8mkFNRwEegF8+/DwYqrfEAcUPMA33bz1hEBEXZODl54ZrePHgc2Ci3aoNKBo230s88OvnL/t7Nx8zqOsoMrCysUCc8/f/Bx/FeYIYETf3cLg+A8P3+p+/fgUqqkpDFP/59/Pzh19ZkUZL52GN6YJ+AwETO/V6QWHuvF8//rz9/u13Jgv7n81h2qt/wTQAAJeGjg3D55B1AAAAAElFTkSuQmCC" /><a href="https://leafletjs.com/" title="A JavaScript library for interactive maps" target="_blank">Leaflet</a> | <span class="symbol">© Created by</span> <a href="https://medium.com/@geek-cc" target="_blank"> ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a></span>',
       position: 'bottomright'
-    });
+    }).addTo(map);
 
 	let customIcon = L.Icon.extend({
 	    options: {
@@ -177,12 +199,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		htmlStr += "<div id='map-bounds' class='border border-0 m-0 w-100'>";
 		htmlStr += "<div class='leaflet-control-layers-overlays'>";
 		htmlStr += "<table class='table table-bordered table-condensed table-sm m-0'>";
-		htmlStr += "<tr><th colspan='2'><u>X Field:</u></th></tr>";
-		htmlStr += "<tr><th>X</th><td>(Longitude)</td></tr>";
+		htmlStr += "<tr><th>X</th><td>Longitude</td></tr>";
 		htmlStr += "<tr><th>Left:</th><td id='imgBounds_Left'></td></tr>";
 		htmlStr += "<tr><th>Right:</th><td id='imgBounds_Right'></td></tr>";
-		htmlStr += "<tr><th colspan='2'><u>Y Field:</u></th></tr>";
-		htmlStr += "<tr><th>Y</th><td>(Latitude)</td></tr>";
+		htmlStr += "<tr><th>Y</th><td>Latitude</td></tr>";
 		htmlStr += "<tr><th>Bottom:</th><td id='imgBounds_Bottom'></td></tr>";
 		htmlStr += "<tr><th>Top:</th><td id='imgBounds_Top'></td></tr>";
 		htmlStr += "</table>";
@@ -195,6 +215,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		return div;
 	};
 	command.addTo(map);
+
+	L.DomEvent.disableClickPropagation(document.getElementById('map-bounds'));
+	L.DomEvent.disableScrollPropagation(document.getElementById('map-bounds'));
 
 	const imgBounds_Left=document.getElementById('imgBounds_Left');
 	const imgBounds_Right=document.getElementById('imgBounds_Right');
@@ -220,6 +243,11 @@ document.addEventListener('DOMContentLoaded', () => {
   		// geojsonDisplayContainer.innerText=JSON.stringify(displayGeoJSONObj, null, 2);
   		highlightJSON('geojsonDisplayContainer', displayGeoJSONObj);
 	}
+
+	const copyGeojsonDisplay = document.getElementById('copyGeojsonDisplay');
+	copyGeojsonDisplay.addEventListener('click', ()=> {
+		selectCopyText('geojsonDisplayContainer');
+	});
 
 	function renderImageBounds() {
 		if(typeof mapLayer !== 'undefined' || typeof pointLayer !== 'undefined') {
@@ -550,9 +578,36 @@ document.addEventListener('DOMContentLoaded', () => {
 			        return marker;
 			    }
 			}).addTo(map);
-
-			// console.log(pointLayer);
 		}
+
+		if(typeof mapLayer !== 'undefined') {
+			layerBounds=mapLayer.getBounds();
+		} else if(typeof pointLayer !== 'undefined') {
+			let yMax,yMin,xMax,xMin;
+
+			for(let pointFeature of pointGeojsonObj['features']) {
+				let coords=pointFeature['geometry']['coordinates'];
+				let x=coords[0];
+				let y=coords[1];
+				if(typeof xMax==='undefined' || x>xMax) {
+					xMax=x;
+				}
+				if(typeof xMin==='undefined' || x<xMin) {
+					xMin=x;
+				}
+
+				if(typeof yMax==='undefined' || y>yMax) {
+					yMax=y;
+				}
+				if(typeof yMin==='undefined' || y<yMin) {
+					yMin=y;
+				}
+			}
+			const northEast = [yMax, xMin];
+		    const southWest = [yMin, xMax];
+		    layerBounds=[northEast, southWest];
+		}
+
 		let promise = new Promise((resolve, reject) => {
 		    setTimeout(() => resolve('renderGeojsonLayer'), 100)
 		});
@@ -607,7 +662,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				scale.addTo(map);
 				zoomControl.addTo(map);
-				attributionControl.addTo(map);
 
 				resetMapView();
 			}
@@ -621,25 +675,9 @@ document.addEventListener('DOMContentLoaded', () => {
        }); // end file-reader onload
 	}); // inputSpatialFormatBtn function
 
-	
-	function resetMapView() {
-		// console.log([mapLayer,pointGeojsonObj]);
-		if(typeof mapLayer !== 'undefined') {
-			let layerBounds=mapLayer.getBounds();
+ 	function resetMapView() {
+		if(typeof layerBounds !== 'undefined') {
 			map.fitBounds(layerBounds);
-		} else {
-			const center = turf.center(pointGeojsonObj);
-			// console.log(center);
-			// var center = turf.point([103.83254, 1.28454]);
-			let radius = 5;
-			let bearing1 = 25;
-			let bearing2 = 45;
-
-			let sector = turf.sector(center, radius, bearing1, bearing2);
-			// console.log(sector);
-			let sectorLayer=L.geoJSON(sector);
-			// console.log(sector);
-			map.fitBounds(sectorLayer.getBounds());
 		}
 	}
 	resetMapViewBtn.addEventListener('click', () => {	
@@ -673,8 +711,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-	
-
 	function bindMergeBtnPropEvent() {
 		let mergeBtns=document.querySelectorAll('.mergeBtn');
 		for(let mergeBtn of mergeBtns) {
@@ -686,7 +722,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 					map.removeControl(scale);
 					map.removeControl(zoomControl);
-					map.removeControl(attributionControl);
 
 					if(typeof mapLayer !== 'undefined') {
 						map.removeLayer(mapLayer);
@@ -703,7 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					pointLayer=undefined;
 
 					imgBounds=null;
-					layerBounds=null;
+					layerBounds=undefined;
 					
 					// imgBounds_Left.innerHTML='';
 					// imgBounds_Right.innerHTML='';
@@ -725,7 +760,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 					scale.addTo(map);
 					zoomControl.addTo(map);
-					attributionControl.addTo(map);
 
 					resetMapView();
 					alert(updateSuccessAlert);
@@ -746,13 +780,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		outputSpatialFormatBtn.disabled=true;
 
 		resetMapViewBtn.disabled=true;
-
+		
 		uploadSpatialFileIs=null;
 		spatialType='GEOJSON';
 
 		map.removeControl(scale);
 		map.removeControl(zoomControl);
-		map.removeControl(attributionControl);
 
 		if(typeof mapLayer !== 'undefined') {
 			map.removeLayer(mapLayer);
@@ -769,7 +802,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		pointLayer=undefined;
 
 		imgBounds=null;
-		layerBounds=null;
+		layerBounds=undefined;
 
 		inputSpatialFormatDDL.value='GEOJSON';
 		outputSpatialFormatDDL.value='GEOJSON';

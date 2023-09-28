@@ -52,6 +52,7 @@ body {
 }
 #geojsonDisplayContainer {
     font-size: 1.0rem;
+    height: calc(100% - 2.95rem);
 }
 
 #geojsonDisplayContainer .string, 
@@ -163,4 +164,14 @@ td.table-placeholder {
 }
 .tabSymbol {
     vertical-align: sub;
+}
+
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.pointer-events {
+  pointer-events: none;
 }

@@ -19,7 +19,7 @@
 
 ### ✍ Read related post here
 
-[**Article :: Link :: GIS Data Viewer In Leaflet JS — Supports Mixed Geometry Types & GeometryCollection**](https://towardsdatascience.com/render-3d-buildings-in-geospatial-webgl-visualisations-c5325eadb347)
+[**Article :: Link :: GIS Data Viewer In Leaflet JS - For Standalone & Offline Use**](https://towardsdatascience.com/render-3d-buildings-in-geospatial-webgl-visualisations-c5325eadb347)
 
 ### 📌 Features
 
@@ -35,16 +35,16 @@
 </div>
 
 <div align="left">
-### 📄 Geospatial Utility Plugins
+<h3>📄 Geospatial JavaScript Plugins</h3>
 </div>
-
 <div align="left">
 	<ul>
-		<li><a href='https://turfjs.org/' target='_blank'>Turf</a></li>
-		<li><a href='https://github.com/placemark/togeojson' target='_blank'>togeojson</a></li>
-		<li><a href='https://github.com/mapbox/tokml' target='_blank'>tokml</a></li>
-		<li><a href='https://github.com/yuletide/node-shp' target='_blank'>node-shp</a></li>
-		<li><a href='https://github.com/mapbox/shp-write' target='_blank'>shp-write</a></li>
+		<li><a href='https://leafletjs.com/' target='_blank'>LeafletJS</a>— Renders interactive map</li>
+		<li><a href='https://turfjs.org/' target='_blank'>TurfJS</a>— For advanced geospatial analysis</li>
+		<li><a href='https://github.com/placemark/togeojson' target='_blank'>togeojson</a>— Converts <strong>KML🡒GeoJSON</strong></li>
+		<li><a href='https://github.com/mapbox/tokml' target='_blank'>tokml</a>— Converts <strong>GeoJSON🡒KML</strong></li>
+		<li><a href='https://github.com/yuletide/node-shp' target='_blank'>node-shp</a>— Converts <strong>SHP🡒GeoJSON</strong></li>
+		<li><a href='https://github.com/mapbox/shp-write' target='_blank'>shp-write</a>— Converts <strong>GeoJSON🡒SHP</strong></li>
 	</ul>
 </div>
 
