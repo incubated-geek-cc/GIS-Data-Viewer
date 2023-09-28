@@ -10,10 +10,14 @@
 <div align="left">
 
 ### 👀 Preview
+
+<strong>Demo (1) Import and render map display</strong>
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/demo.gif' width="600px" />
 <br>
+<strong>Demo (2) Merge Polygon features</strong>
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/mergePolygons.gif' width="600px" />
 <br>
+<strong>Demo (3) Attribute removal</strong>
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/GIS-Data-Viewer/main/img/delbtn_function.png' width="600px" />
 
 ### 🌟 Try it yourself
@@ -41,12 +45,12 @@
 </div>
 <div align="left">
 	<ul>
-		<li><a href='https://leafletjs.com/' target='_blank'>LeafletJS</a>— Renders interactive map</li>
-		<li><a href='https://turfjs.org/' target='_blank'>TurfJS</a>— For advanced geospatial analysis</li>
+		<li><a href='https://leafletjs.com/' target='_blank'>LeafletJS</a>: Renders interactive map</li>
+		<li><a href='https://turfjs.org/' target='_blank'>TurfJS</a>: For advanced geospatial analysis</li>
 		<li><a href='https://github.com/placemark/togeojson' target='_blank'>togeojson</a>— Converts <strong>KML🡒GeoJSON</strong></li>
-		<li><a href='https://github.com/mapbox/tokml' target='_blank'>tokml</a>— Converts <strong>GeoJSON🡒KML</strong></li>
-		<li><a href='https://github.com/yuletide/node-shp' target='_blank'>node-shp</a>— Converts <strong>SHP🡒GeoJSON</strong></li>
-		<li><a href='https://github.com/mapbox/shp-write' target='_blank'>shp-write</a>— Converts <strong>GeoJSON🡒SHP</strong></li>
+		<li><a href='https://github.com/mapbox/tokml' target='_blank'>tokml</a>: Converts <strong>GeoJSON🡒KML</strong></li>
+		<li><a href='https://github.com/yuletide/node-shp' target='_blank'>node-shp</a>: Converts <strong>SHP🡒GeoJSON</strong></li>
+		<li><a href='https://github.com/mapbox/shp-write' target='_blank'>shp-write</a>: Converts <strong>GeoJSON🡒SHP</strong></li>
 	</ul>
 </div>
 
